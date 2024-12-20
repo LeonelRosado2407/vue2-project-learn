@@ -1,11 +1,19 @@
 <template>
-    <div class="bg-gray-800 w-full h-[100vh]">
-        <slot></slot>
+    <div class="bg-gray-600 w-full h-[100vh]">
+        <NavbarComponent />
+        <slot>
+
+        </slot>
     </div>
 </template>
 
 <script>
+    import NavbarComponent from './NavbarComponent.vue';
+
     export default {
         name:'LayoutComponent',
+        components: {
+            NavbarComponent
+        }
     }
 </script>

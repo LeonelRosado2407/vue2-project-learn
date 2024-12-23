@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-600 w-full h-[100vh]">
+    <div class="bg-gray-50 w-full h-[100vh]">
         <NavbarComponent />
         <slot>
 

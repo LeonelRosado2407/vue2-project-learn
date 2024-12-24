@@ -12,7 +12,7 @@
                         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Iniciar Sesión
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="IniciarSesion">
                         <div>
                             <label for="email"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo
@@ -44,9 +44,7 @@
                                 password?</a>
                         </div>
                         <button type="submit"
-                            class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            @click.prevent="IniciarSesion"
-                        >
+                            class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Sign in
                         </button>
                         <div v-if="errors.length > 0">
@@ -54,11 +52,11 @@
                         </div>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             No tienes una cuenta aún? 
-                            <a href="#"
+                            <RouterLink to="/auth/register"
                                 class="font-medium text-blue-600 hover:underline dark:text-blue-500"
                             >
                                 Registrate
-                            </a>
+                            </RouterLink>
                         </p>
                     </form>
                 </div>
@@ -71,8 +69,12 @@
 
 import { Loggin } from '@/api/auth';
 import { UpdateAuth,SaveUserData,UserLogged } from '@/stores/userStore';
+import { RouterLink } from 'vue-router';
 export default {
     name: 'LoginView',
+    components: {
+        RouterLink
+    },
     data() {
         return {
             email: '',
@@ -93,6 +95,7 @@ export default {
                     UpdateAuth(true)
                     SaveUserData(response.data?.usuario,response.data?.rol)
                     //agregamos la coockie access_token dependiendo de si el usuario quiere recordar la sesión
+
                     if(this.remmeber)
                         this.$cookies.set('access_token', response.data.access_token, 60 * 60 * 24 * 7);
                     else{
